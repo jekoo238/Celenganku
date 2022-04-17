@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/celengan_navigation"
+    app:startDestination="@id/mainFeatureFragment">
+
+    <fragment
+        android:id="@+id/mainFeatureFragment"
+        android:name="id.celenganku.app.ui.main.MainFeatureFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/main_feature_fragment" >
+        <action
+            android:id="@+id/action_mainFeatureFragment_to_addSavingFragment"
+            app:destination="@id/addSavingFragment" />
+        <action
+            android:id="@+id/action_mainFeatureFragment_to_savingDetailFragment"
+            app:destination="@id/savingDetailFragment" />
+        <action
+            android:id="@+id/action_mainFeatureFragment_to_historyDetailFragment"
+            app:destination="@id/historyDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addSavingFragment"
+        android:name="id.celenganku.app.ui.add.AddSavingFragment"
+        android:label="Tambah Celengan"
+        tools:layout="@layout/add_saving_fragment" />
+    <fragment
+        android:id="@+id/savingDetailFragment"
+        android:name="id.celenganku.app.ui.savingsDetail.SavingDetailFragment"
+        android:label="{title}"
+        tools:layout="@layout/saving_detail_fragment" >
+        <argument
+            android:name="savingId"
+            app:argType="integer" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/savingDoneFragment"
+        android:name="id.celenganku.app.ui.savingDone.SavingDoneFragment"
+        android:label=""
+        tools:layout="@layout/fragment_saving_done" />
+    <fragment
+        android:id="@+id/historyDetailFragment"
+        android:name="id.celenganku.app.ui.savingsHistoryDetail.HistoryDetailFragment"
+        android:label="{title}"
+        tools:layout="@layout/history_detail_fragment">
+        <argument
+            android:name="savingId"
+            app:argType="integer" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
+</navigation>
