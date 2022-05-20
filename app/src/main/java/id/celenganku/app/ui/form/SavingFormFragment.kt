@@ -1,4 +1,4 @@
-package id.celenganku.app.ui.add
+package id.celenganku.app.ui.form
 
 import android.Manifest
 import android.app.Activity
@@ -8,7 +8,9 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment.DIRECTORY_PICTURES
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -18,7 +20,7 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
 import id.celenganku.app.R
-import id.celenganku.app.databinding.AddSavingFragmentBinding
+import id.celenganku.app.databinding.SavingFormFragmentBinding
 import id.celenganku.app.model.SavingsEntity
 import id.celenganku.app.utils.addAutoConverterToMoneyFormat
 import id.celenganku.app.utils.getNumber
@@ -30,11 +32,11 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.*
 
-class AddSavingFragment : Fragment() {
+class SavingFormFragment : Fragment() {
 
-    private val viewModel: AddSavingViewModel by viewModel()
-    private var _binding: AddSavingFragmentBinding? = null
-    private val binding: AddSavingFragmentBinding get() = _binding!!
+    private val viewModel: SavingFormViewModel by viewModel()
+    private var _binding: SavingFormFragmentBinding? = null
+    private val binding: SavingFormFragmentBinding get() = _binding!!
     private var requestCreator: RequestCreator? = null
 
     override fun onCreate(savedInstanceState: Bundle?)  {
@@ -47,23 +49,8 @@ class AddSavingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
-        _binding = AddSavingFragmentBinding.inflate(inflater, container, false)
+        _binding = SavingFormFragmentBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.add_saving, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.saveButton -> {
-                saveSavings()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     private fun saveSavings() {
@@ -115,7 +102,8 @@ class AddSavingFragment : Fragment() {
                 targetPerDay.toString().toInt(),
                 0,
                 Calendar.getInstance().timeInMillis,
-                null
+                null,
+                getCheckedIndex()
             )
             viewModel.addSaving(savingModel)
 
@@ -127,8 +115,16 @@ class AddSavingFragment : Fragment() {
 
     }
 
+    private fun getCheckedIndex() = when(binding.fillingType.checkedButtonId) {
+        R.id.dailyButton -> 0L
+        R.id.weeklyButton -> 1L
+        else -> 3L
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
 
         binding.target.addAutoConverterToMoneyFormat(binding.targetLayout)
         binding.targetPerDay.addAutoConverterToMoneyFormat(binding.targetPerDayLayout)
@@ -139,6 +135,10 @@ class AddSavingFragment : Fragment() {
             }else{
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
             }
+        }
+
+        binding.saveButton.setOnClickListener {
+            saveSavings()
         }
     }
 

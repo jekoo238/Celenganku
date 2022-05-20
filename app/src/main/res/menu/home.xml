@@ -4,6 +4,7 @@
 
     <item
         android:id="@+id/changeTheme"
+        android:icon="@drawable/ic_round_brightness_6_24"
         android:title="Tema"
-        app:showAsAction="never" />
+        app:showAsAction="never|ifRoom" />
 </menu>

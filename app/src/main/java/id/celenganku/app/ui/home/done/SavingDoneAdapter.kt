@@ -1,4 +1,4 @@
-package id.celenganku.app.ui.hsavingsHistory
+package id.celenganku.app.ui.home.done
 
 import android.net.Uri
 import android.view.LayoutInflater
@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import id.celenganku.app.databinding.ItemSavingDoneBinding
 import id.celenganku.app.model.SavingsEntity
-import id.celenganku.app.ui.main.MainFeatureFragmentDirections
+import id.celenganku.app.ui.home.HomeFragmentDirections
 import id.celenganku.app.utils.formatNumber
 import java.util.concurrent.TimeUnit
 
-class HistoryAdapter: ListAdapter<SavingsEntity, HistoryAdapter.HistoryViewHolder>(
+class SavingDoneAdapter: ListAdapter<SavingsEntity, SavingDoneAdapter.HistoryViewHolder>(
         object : DiffUtil.ItemCallback<SavingsEntity>(){
             override fun areItemsTheSame(oldItem: SavingsEntity, newItem: SavingsEntity): Boolean {
                 return oldItem.id == newItem.id
@@ -41,7 +41,7 @@ class HistoryAdapter: ListAdapter<SavingsEntity, HistoryAdapter.HistoryViewHolde
                     completeDay.text = "Tercapai Dalam Waktu $day Hari"
                 }
                 root.setOnClickListener {
-                    val direction = MainFeatureFragmentDirections.actionMainFeatureFragmentToHistoryDetailFragment(item.id!!, item.title)
+                    val direction = HomeFragmentDirections.actionMainFeatureFragmentToHistoryDetailFragment(item.id!!, item.title)
                     it.findNavController().navigate(direction)
                 }
             }

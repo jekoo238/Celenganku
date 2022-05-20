@@ -3,183 +3,224 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:transitionGroup="true"
-    android:transitionName="transition_detail_savings"
-    tools:context=".ui.savingsDetail.SavingDetailFragment">
+    tools:context=".ui.currentSavingsDetail.SavingDetailFragment">
 
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        style="@style/Widget.MaterialComponents.AppBarLayout.Surface"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways" >
-
-            <ImageView
-                android:id="@+id/savingImage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/ic_image_bg"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="16:9"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
-
-            <TextView
-                android:id="@+id/target"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/nunito_semibold"
-                android:gravity="center"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                tools:text="Rp. 16.000.000" />
-
-            <ProgressBar
-                android:id="@+id/targetProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/targetPerDay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                tools:text="Rp. 50.000 / Hari" />
-
-            <View
-                android:id="@+id/divider4"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="?android:attr/listDivider" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Terkumpul"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-                <TextView
-                    android:id="@+id/collected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="end"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    tools:text="Rp.12.000" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Kurang"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-                <TextView
-                    android:id="@+id/mins"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="end"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    tools:text="Rp.12.000" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Estimasi Tercapai"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-                <TextView
-                    android:id="@+id/estimation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="end"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    tools:text="35 Hari Lagi" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="?android:attr/listDivider" />
-
-        </LinearLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_round_arrow_back_ios_24" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="80dp">
 
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listSavingLogsRv"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="60dp"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/item_saving_logs" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Elevated"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/savingImage"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ic_image_bg"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/circleImageView"
+                        app:layout_constraintDimensionRatio="16:9"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/target"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="center_horizontal"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                        app:layout_constraintEnd_toStartOf="@+id/divider2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/savingImage"
+                        tools:text="Rp. 16.000.000" />
+
+                    <TextView
+                        android:id="@+id/targetPerDay"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="center_horizontal"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                        app:layout_constraintEnd_toStartOf="@+id/divider2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/target"
+                        tools:text="Rp. 50.000 / Hari" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Terkumpul"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+                        app:layout_constraintEnd_toStartOf="@+id/divider5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/estimation" />
+
+                    <TextView
+                        android:id="@+id/collected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="end"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                        android:textColor="#4caf50"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/divider5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView7"
+                        tools:text="Rp.12.000" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Kurang"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/divider5"
+                        app:layout_constraintTop_toBottomOf="@+id/estimation" />
+
+                    <TextView
+                        android:id="@+id/mins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="end"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                        android:textColor="#d32f2f"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/divider5"
+                        app:layout_constraintTop_toBottomOf="@+id/textView3"
+                        tools:text="Rp.12.000" />
+
+                    <TextView
+                        android:id="@+id/percentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                        app:layout_constraintBottom_toBottomOf="@+id/targetProgressBar"
+                        app:layout_constraintEnd_toEndOf="@+id/targetProgressBar"
+                        app:layout_constraintStart_toStartOf="@+id/targetProgressBar"
+                        app:layout_constraintTop_toTopOf="@+id/targetProgressBar"
+                        tools:text="100%" />
+
+                    <View
+                        android:id="@+id/divider5"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintBottom_toBottomOf="@+id/collected"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+                    <View
+                        android:id="@+id/divider2"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintBottom_toBottomOf="@+id/targetPerDay"
+                        app:layout_constraintEnd_toStartOf="@+id/targetProgressBar"
+                        app:layout_constraintTop_toTopOf="@+id/target" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/estimation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:text="Estimasi 3 hari lagi"
+                        android:textAlignment="center"
+                        app:ensureMinTouchTargetSize="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/targetProgressBar" />
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/targetProgressBar"
+                        style="@style/Widget.Material3.CircularProgressIndicator.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        app:indicatorSize="50dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/divider2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/divider2"
+                        app:showDelay="20000"
+                        app:trackColor="?attr/colorSurfaceVariant"
+                        app:trackCornerRadius="3dp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Elevated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listSavingLogsRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    app:layoutManager="LinearLayoutManager"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_saving_detail_log" />
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
     <View
@@ -197,7 +238,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="28dp"
         android:layout_marginBottom="16dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
@@ -207,7 +248,8 @@
         android:visibility="gone">
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
+            style="@style/Widget.Material3.CardView.Elevated"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
@@ -237,7 +279,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="28dp"
         android:layout_marginBottom="16dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
@@ -247,7 +289,8 @@
         android:visibility="gone">
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
+            style="@style/Widget.Material3.CardView.Elevated"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
@@ -277,7 +320,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="28dp"
         android:layout_marginBottom="16dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
@@ -287,7 +330,8 @@
         android:visibility="gone">
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
+            style="@style/Widget.Material3.CardView.Elevated"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
@@ -317,7 +361,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/fab_image" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

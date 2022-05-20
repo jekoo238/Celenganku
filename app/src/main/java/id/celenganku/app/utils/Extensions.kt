@@ -22,8 +22,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
+fun Long.format(pattern: String): String {
+    return SimpleDateFormat(pattern, Locale.getDefault()).format(Date(this))
+}
 
 fun changeTheme(preference: PreferenceHelper) {
     val mode = when(preference.theme){

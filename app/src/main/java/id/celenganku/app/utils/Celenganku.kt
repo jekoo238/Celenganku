@@ -3,11 +3,11 @@ package id.celenganku.app.utils
 import android.app.Application
 import androidx.room.Room
 import id.celenganku.app.db.AppDB
-import id.celenganku.app.ui.add.AddSavingViewModel
-import id.celenganku.app.ui.home.CurrentViewModel
-import id.celenganku.app.ui.savingsDetail.SavingDetailViewModel
-import id.celenganku.app.ui.hsavingsHistory.HistoryViewModel
-import id.celenganku.app.ui.savingsHistoryDetail.HistoryDetailViewModel
+import id.celenganku.app.ui.form.SavingFormViewModel
+import id.celenganku.app.ui.home.current.CurrentViewModel
+import id.celenganku.app.ui.currentSavingsDetail.SavingDetailViewModel
+import id.celenganku.app.ui.home.done.SavingDoneViewModel
+import id.celenganku.app.ui.savingsDoneDetail.HistoryDetailViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -28,10 +28,10 @@ class Celenganku: Application() {
             }
 
             single { get<AppDB>().savingDao() }
-            viewModel { AddSavingViewModel(get()) }
+            viewModel { SavingFormViewModel(get()) }
             viewModel { CurrentViewModel(get()) }
             viewModel { SavingDetailViewModel(get(), get()) }
-            viewModel { HistoryViewModel(get()) }
+            viewModel { SavingDoneViewModel(get()) }
             viewModel { HistoryDetailViewModel(get()) }
         }
 

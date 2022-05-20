@@ -41,7 +41,7 @@ interface SavingDao {
         deleteSavingLog(id)
     }
 
-    @Query("SELECT * FROM savingsLogs WHERE savingsId = :id")
+    @Query("SELECT * FROM savingsLogs WHERE savingsId = :id ORDER BY timestamp DESC")
     fun getSavingsLogs(id: Int): LiveData<List<SavingsLogEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -1,9 +1,10 @@
-package id.celenganku.app.ui.home
+package id.celenganku.app.ui.home.current
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import id.celenganku.app.R
@@ -35,6 +36,7 @@ class CurrentFragment : Fragment() {
 
         binding.recyclerView.adapter = adapter
         viewModel.allSaving.observe(viewLifecycleOwner){
+            if (it.isEmpty()) binding.emptyData.isVisible = true
             adapter.submitList(it)
         }
 

@@ -1,4 +1,4 @@
-package id.celenganku.app.ui.savingsHistoryDetail
+package id.celenganku.app.ui.savingsDoneDetail
 
 import android.net.Uri
 import androidx.lifecycle.*
@@ -24,7 +24,7 @@ class HistoryDetailViewModel(private val savingDao: SavingDao) : ViewModel() {
                 val imageFile = File(path)
                 if (imageFile.exists()) imageFile.delete()
             }
-        }catch (e: Exception){
+        } catch (e: Exception){
 
         }
     }

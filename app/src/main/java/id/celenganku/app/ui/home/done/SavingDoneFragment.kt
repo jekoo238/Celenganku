@@ -1,19 +1,22 @@
-package id.celenganku.app.ui.hsavingsHistory
+package id.celenganku.app.ui.home.done
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import id.celenganku.app.databinding.HistoryFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FinishedSavingFragment : Fragment() {
+class
 
-    private val viewModel: HistoryViewModel by viewModel()
+SavingDoneFragment : Fragment() {
+
+    private val viewModel: SavingDoneViewModel by viewModel()
     private var _binding: HistoryFragmentBinding? = null
     private val binding: HistoryFragmentBinding get() = _binding!!
-    private val adapter = HistoryAdapter()
+    private val adapter = SavingDoneAdapter()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +30,7 @@ class FinishedSavingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.historyRv.adapter = adapter
         viewModel.finishedSaving.observe(viewLifecycleOwner){
+            if (it.isEmpty()) binding.emptyData.isVisible = true
             adapter.submitList(it)
         }
     }

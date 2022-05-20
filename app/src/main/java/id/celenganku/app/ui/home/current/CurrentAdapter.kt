@@ -1,19 +1,18 @@
-package id.celenganku.app.ui.home
+package id.celenganku.app.ui.home.current
 
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import id.celenganku.app.databinding.ItemSavingBinding
 import id.celenganku.app.model.SavingsEntity
-import id.celenganku.app.ui.main.MainFeatureFragmentDirections
+import id.celenganku.app.ui.home.HomeFragmentDirections
 import id.celenganku.app.utils.formatNumber
-import java.util.*
+import kotlin.math.roundToInt
 
 class CurrentAdapter: ListAdapter<SavingsEntity, CurrentAdapter.CurrentViewHolder>(
     object : DiffUtil.ItemCallback<SavingsEntity>(){
@@ -31,26 +30,34 @@ class CurrentAdapter: ListAdapter<SavingsEntity, CurrentAdapter.CurrentViewHolde
 
         fun bind(item: SavingsEntity){
             with(binding){
-                root.transitionName = "transition_item_${item.id}"
                 title.text = item.title
                 if (item.image != null){
-                    Picasso.get().load(Uri.parse(item.image)).into(image)
+                    Picasso.get().load(Uri.parse(item.image)).into(savingImage)
                 }
 
                 target.text = formatNumber(item.target)
 
-                collected.text = formatNumber(item.collected)
-                progressBar.apply {
+                targetProgressBar.apply {
                     max = item.target
                     progress = item.collected
                 }
-                targerPerDay.text = "${formatNumber(item.targetPerDay)} / Hari"
+                val percent = ((item.collected.toFloat()/item.target.toFloat())*100F).roundToInt()
+                percentage.text = "$percent%"
+
+                val suffix = when (item.fillingType) {
+                    0L -> "Perhari"
+                    1L -> "Perminggu"
+                    else -> "Perbulan"
+                }
+                targetPerDay.text = "${formatNumber(item.targetPerDay)} $suffix"
+
                 val estimationDay = ((item.target-item.collected)/item.targetPerDay)
-                estimation.text = "$estimationDay Hari Lagi"
+
+                estimation.text = "Estimasi : $estimationDay ${item.fillingTypeText} Lagi"
+
                 root.setOnClickListener {
-                    val direction = MainFeatureFragmentDirections.actionMainFeatureFragmentToSavingDetailFragment(item.id!!, item.title)
-                    val extra = FragmentNavigatorExtras(it to "transition_detail_savings")
-                    it.findNavController().navigate(direction, extra)
+                    val direction = HomeFragmentDirections.actionMainFeatureFragmentToSavingDetailFragment(item.id!!, item.title)
+                    it.findNavController().navigate(direction)
                 }
             }
         }

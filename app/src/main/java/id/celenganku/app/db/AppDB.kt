@@ -1,5 +1,6 @@
 package id.celenganku.app.db
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import id.celenganku.app.model.SavingsEntity
@@ -10,8 +11,9 @@ import id.celenganku.app.model.SavingsLogEntity
         SavingsEntity::class,
         SavingsLogEntity::class
     ],
-    version = 1,
-    exportSchema = false
+    version = 2,
+    autoMigrations = [ AutoMigration(from = 1, to = 2) ],
+    exportSchema = true
 )
 
 abstract class AppDB: RoomDatabase() {

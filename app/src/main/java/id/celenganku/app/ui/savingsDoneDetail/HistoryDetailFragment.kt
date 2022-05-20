@@ -1,6 +1,5 @@
-package id.celenganku.app.ui.savingsHistoryDetail
+package id.celenganku.app.ui.savingsDoneDetail
 
-import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,10 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import com.squareup.picasso.Picasso
+import id.celenganku.app.R
 import id.celenganku.app.databinding.HistoryDetailFragmentBinding
-import id.celenganku.app.ui.savingsDetail.SavingDetailAdapter
+import id.celenganku.app.ui.currentSavingsDetail.SavingDetailAdapter
 import id.celenganku.app.utils.formatNumber
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
@@ -23,12 +24,13 @@ class HistoryDetailFragment : Fragment() {
     private var _binding: HistoryDetailFragmentBinding? = null
     private val binding: HistoryDetailFragmentBinding get() = _binding!!
     private val args: HistoryDetailFragmentArgs by navArgs()
+    private lateinit var savingAdapter: SavingDetailAdapter
 
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+        savingAdapter = SavingDetailAdapter()
     }
 
     override fun onCreateView(
@@ -42,8 +44,11 @@ class HistoryDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.savingId = args.savingId
+        binding.toolbar.apply {
+            setNavigationOnClickListener { findNavController().navigateUp() }
+            inflateMenu(R.menu.saving_complete)
+        }
 
-        val savingAdapter = SavingDetailAdapter()
         binding.listSavingLogsRv.adapter = savingAdapter
 
         viewModel.savingsLogs.observe(viewLifecycleOwner){
@@ -53,6 +58,9 @@ class HistoryDetailFragment : Fragment() {
         viewModel.savingsDetail.observe(viewLifecycleOwner){
             it?.let { saving ->
                 with(binding){
+
+                    toolbar.title = saving.title
+
                     if (saving.image != null){
                         Picasso.get().load(Uri.parse(saving.image)).into(savingImage)
                     }
@@ -62,9 +70,9 @@ class HistoryDetailFragment : Fragment() {
                         completeDay.text = "Tercapai Dalam Waktu $day Hari"
                     }
 
-                    fabOptions.setOnClickListener {
-                        AlertDialog.Builder(requireContext()).apply {
-                            setMessage("Hapus tabungan?")
+                    toolbar.setOnMenuItemClickListener { menu ->
+                        MaterialAlertDialogBuilder(requireContext()).apply {
+                            setTitle("Hapus tabungan?")
                             setPositiveButton("Hapus"){ dialog, _ ->
                                 viewModel.deleteSavingById(args.savingId, saving.image)
 
@@ -76,7 +84,9 @@ class HistoryDetailFragment : Fragment() {
                             }
                             create()
                             show()
-                        }}
+                        }
+                        true
+                    }
                 }
             }
         }

@@ -1,4 +1,4 @@
-package id.celenganku.app.ui.home
+package id.celenganku.app.ui.home.current
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
