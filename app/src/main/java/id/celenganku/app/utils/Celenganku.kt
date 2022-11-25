@@ -2,6 +2,7 @@ package id.celenganku.app.utils
 
 import android.app.Application
 import androidx.room.Room
+import com.google.android.material.color.DynamicColors
 import id.celenganku.app.db.AppDB
 import id.celenganku.app.ui.form.SavingFormViewModel
 import id.celenganku.app.ui.home.current.CurrentViewModel
@@ -18,7 +19,7 @@ class Celenganku: Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        DynamicColors.applyToActivitiesIfAvailable(this)
         val mainModule = module {
             single {
                 Room.databaseBuilder(androidContext(), AppDB::class.java, "app.db")

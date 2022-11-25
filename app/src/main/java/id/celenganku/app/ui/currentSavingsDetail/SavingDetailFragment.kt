@@ -221,7 +221,7 @@ class SavingDetailFragment : Fragment() {
             addSavingsLayout.animate().translationY(0f)
             minSavingsLayout.animate().translationY(0f)
             removeSavingsLayout.animate().translationY(0f).setListener(object : AnimatorListenerAdapter(){
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
                     if (!isFabOpen){
                         addSavingsLayout.visibility = View.GONE
