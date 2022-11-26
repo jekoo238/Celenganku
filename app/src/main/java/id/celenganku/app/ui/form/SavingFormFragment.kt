@@ -48,9 +48,32 @@ class SavingFormFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
         _binding = SavingFormFragmentBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+
+        binding.formContent.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            binding.appBarLayout.isLifted = scrollY > 20
+        }
+        binding.target.addAutoConverterToMoneyFormat(binding.targetLayout)
+        binding.targetPerDay.addAutoConverterToMoneyFormat(binding.targetPerDayLayout)
+
+        binding.pickImageButton.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                pickImageFromGallery()
+            }else{
+                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+            }
+        }
+
+        binding.saveButton.setOnClickListener {
+            saveSavings()
+        }
     }
 
     private fun saveSavings() {
@@ -59,7 +82,10 @@ class SavingFormFragment : Fragment() {
         val targetPerDay = binding.targetPerDay.text.getNumber()
 
         if (title.isNullOrEmpty() or title.isNullOrEmpty()){
-            binding.titleLayout.error = "Nama tabungan harus diisi"
+            binding.titleLayout.apply {
+                error = "Nama tabungan harus diisi"
+                requestFocus()
+            }
             return
         }
 
@@ -119,27 +145,6 @@ class SavingFormFragment : Fragment() {
         R.id.dailyButton -> 0L
         R.id.weeklyButton -> 1L
         else -> 3L
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
-
-        binding.target.addAutoConverterToMoneyFormat(binding.targetLayout)
-        binding.targetPerDay.addAutoConverterToMoneyFormat(binding.targetPerDayLayout)
-
-        binding.pickImageButton.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                pickImageFromGallery()
-            }else{
-                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-            }
-        }
-
-        binding.saveButton.setOnClickListener {
-            saveSavings()
-        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

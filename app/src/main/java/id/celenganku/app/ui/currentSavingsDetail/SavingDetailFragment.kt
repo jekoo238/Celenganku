@@ -54,6 +54,9 @@ class SavingDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.savingId = args.savingId
 
+        binding.detailContent.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            binding.appBarLayout.isLifted = scrollY > 20
+        }
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         setupFab()
         binding.listSavingLogsRv.adapter = savingAdapter

@@ -44,10 +44,7 @@ class HistoryDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.savingId = args.savingId
-        binding.toolbar.apply {
-            setNavigationOnClickListener { findNavController().navigateUp() }
-            inflateMenu(R.menu.saving_complete)
-        }
+        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
 
         binding.listSavingLogsRv.adapter = savingAdapter
 
@@ -70,7 +67,7 @@ class HistoryDetailFragment : Fragment() {
                         completeDay.text = "Tercapai Dalam Waktu $day Hari"
                     }
 
-                    toolbar.setOnMenuItemClickListener { menu ->
+                    binding.deleteButton.setOnClickListener {
                         MaterialAlertDialogBuilder(requireContext()).apply {
                             setTitle("Hapus tabungan?")
                             setPositiveButton("Hapus"){ dialog, _ ->
@@ -85,7 +82,6 @@ class HistoryDetailFragment : Fragment() {
                             create()
                             show()
                         }
-                        true
                     }
                 }
             }

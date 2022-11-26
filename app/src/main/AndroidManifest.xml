@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Celenganku">
         <activity
             android:name=".ui.MainActivity"
-            android:theme="@style/SplashTheme"
+            android:theme="@style/Theme.Celenganku"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

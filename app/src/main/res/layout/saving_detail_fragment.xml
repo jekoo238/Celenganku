@@ -7,52 +7,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:transitionGroup="true"
+    android:fitsSystemWindows="true"
     tools:context=".ui.currentSavingsDetail.SavingDetailFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:navigationIcon="@drawable/ic_round_arrow_back_ios_24" />
+        android:layout_height="wrap_content">
 
-    <androidx.core.widget.NestedScrollView
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_round_arrow_back_ios_24" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/detailContent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:clipToPadding="false"
         android:paddingTop="8dp"
         android:paddingBottom="80dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mainContent"
                 style="@style/Widget.Material3.CardView.Elevated"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="500dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/savingImage"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:adjustViewBounds="true"
-                        android:background="@drawable/ic_image_bg"
-                        android:scaleType="centerCrop"
-                        app:shapeAppearanceOverlay="@style/circleImageView"
-                        app:layout_constraintDimensionRatio="16:9"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/target"
@@ -181,6 +179,19 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/targetProgressBar" />
 
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/savingImage"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ic_image_bg"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintDimensionRatio="16:9"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearanceOverlay="@style/circleImageView" />
+
                     <com.google.android.material.progressindicator.CircularProgressIndicator
                         android:id="@+id/targetProgressBar"
                         style="@style/Widget.Material3.CircularProgressIndicator.Medium"
@@ -198,13 +209,17 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/logCard"
                 style="@style/Widget.Material3.CardView.Elevated"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mainContent"
+                app:layout_constraintWidth_max="500dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/listSavingLogsRv"
@@ -215,15 +230,16 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     app:layoutManager="LinearLayoutManager"
-                    tools:itemCount="5"
+                    tools:itemCount="1"
                     tools:listitem="@layout/item_saving_detail_log" />
             </com.google.android.material.card.MaterialCardView>
 
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <View
+        android:fitsSystemWindows="true"
         android:id="@+id/fabClickedBg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -249,6 +265,7 @@
 
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.Material3.CardView.Elevated"
+            app:cardCornerRadius="6dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -257,6 +274,7 @@
             app:contentPadding="4dp">
 
             <TextView
+                android:layout_marginHorizontal="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Menabung"
@@ -265,12 +283,12 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addSavingsFab"
+            style="?attr/floatingActionButtonSmallStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
             app:backgroundTint="?attr/colorSurface"
             app:elevation="0dp"
-            app:fabSize="mini"
             app:srcCompat="@drawable/ic_round_add_24" />
     </LinearLayout>
 
@@ -290,6 +308,7 @@
 
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.Material3.CardView.Elevated"
+            app:cardCornerRadius="6dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -298,6 +317,7 @@
             app:contentPadding="4dp">
 
             <TextView
+                android:layout_marginHorizontal="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ambil Tabungan"
@@ -306,12 +326,12 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/minSavingsFab"
+            style="?attr/floatingActionButtonSmallStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
             app:backgroundTint="?attr/colorSurface"
             app:elevation="0dp"
-            app:fabSize="mini"
             app:srcCompat="@drawable/ic_round_remove_24" />
     </LinearLayout>
 
@@ -331,6 +351,7 @@
 
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.Material3.CardView.Elevated"
+            app:cardCornerRadius="6dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -339,6 +360,7 @@
             app:contentPadding="4dp">
 
             <TextView
+                android:layout_marginHorizontal="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hapus Tabungan"
@@ -347,12 +369,12 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/removeSavingsFab"
+            style="?attr/floatingActionButtonSmallStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
             app:backgroundTint="?attr/colorSurface"
             app:elevation="0dp"
-            app:fabSize="mini"
             app:srcCompat="@drawable/ic_outline_delete_24" />
     </LinearLayout>
 
