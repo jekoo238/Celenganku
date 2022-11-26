@@ -17,6 +17,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.squareup.picasso.Picasso
 import id.celenganku.app.R
 import id.celenganku.app.databinding.DialogSavingsFormBinding
+import id.celenganku.app.databinding.FragmentSavingDoneBinding
 import id.celenganku.app.databinding.SavingDetailFragmentBinding
 import id.celenganku.app.model.SavingFormModel
 import id.celenganku.app.model.SavingsEntity
@@ -120,9 +121,14 @@ class SavingDetailFragment : Fragment() {
     }
 
     private fun showCompleteDialog() {
-        MaterialAlertDialogBuilder(requireContext()).apply {
-            setView(R.layout.fragment_saving_done)
-            show()
+        val dialogView = FragmentSavingDoneBinding.inflate(layoutInflater)
+        val dialog = MaterialAlertDialogBuilder(requireContext()).apply {
+            setCancelable(false)
+            setView(dialogView.root)
+        }.show()
+        dialogView.closeButton.setOnClickListener {
+            dialog.dismiss()
+            findNavController().navigateUp()
         }
     }
 
@@ -160,7 +166,7 @@ class SavingDetailFragment : Fragment() {
             .setCancelable(false)
             .setView(formView.root)
             .setPositiveButton("Simpan", null)
-            .setNegativeButton("Batal"){ _, _ ->}
+            .setNegativeButton("Batal", null)
             .showWithSoftInput()
 
         formDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
@@ -191,12 +197,12 @@ class SavingDetailFragment : Fragment() {
                 notes = notes
             )
 
+            formDialog.dismiss()
             if (form.isIncrease && nominalValue == (form.target-form.collected)){
                 viewModel.completeSavings(savLogEntity, Calendar.getInstance().timeInMillis)
             }else{
                 viewModel.addOrMinSaving(savLogEntity)
             }
-            formDialog.dismiss()
         }
     }
 

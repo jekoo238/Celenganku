@@ -43,6 +43,9 @@ class HistoryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.historyScroll.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            binding.appBarLayout.isLifted = scrollY > 20
+        }
         viewModel.savingId = args.savingId
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
 

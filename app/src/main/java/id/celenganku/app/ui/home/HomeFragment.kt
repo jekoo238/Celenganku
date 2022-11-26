@@ -47,7 +47,6 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
         _binding = MainFeatureFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
