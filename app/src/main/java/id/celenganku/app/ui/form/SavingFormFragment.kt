@@ -63,7 +63,7 @@ class SavingFormFragment : Fragment() {
         binding.target.addAutoConverterToMoneyFormat(binding.targetLayout)
         binding.targetPerDay.addAutoConverterToMoneyFormat(binding.targetPerDayLayout)
 
-        binding.pickImageButton.setOnClickListener {
+        binding.savingImage.setOnClickListener {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                 pickImageFromGallery()
             }else{

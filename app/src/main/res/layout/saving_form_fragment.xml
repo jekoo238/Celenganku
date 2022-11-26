@@ -98,26 +98,17 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:adjustViewBounds="true"
-                android:background="@drawable/ic_image_bg"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:background="@drawable/pick_image_bg"
+                android:clickable="true"
                 android:scaleType="centerCrop"
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_max="500dp"
-                app:shapeAppearanceOverlay="@style/circleImageView" />
-
-            <Button
-                android:id="@+id/pickImageButton"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="Ganti"
-                app:icon="@drawable/ic_baseline_image_24"
-                app:layout_constraintBottom_toBottomOf="@+id/savingImage"
-                app:layout_constraintEnd_toEndOf="@+id/savingImage" />
+                app:shapeAppearanceOverlay="@style/circleImageView"
+                android:focusable="true" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/titleLayout"

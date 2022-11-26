@@ -3,7 +3,6 @@ package id.celenganku.app.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import id.celenganku.app.R
 import id.celenganku.app.databinding.ActivityMainBinding
 import id.celenganku.app.utils.PreferenceHelper
 import id.celenganku.app.utils.changeTheme

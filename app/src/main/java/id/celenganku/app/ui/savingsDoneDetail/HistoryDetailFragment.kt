@@ -11,7 +11,6 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import com.squareup.picasso.Picasso
-import id.celenganku.app.R
 import id.celenganku.app.databinding.HistoryDetailFragmentBinding
 import id.celenganku.app.ui.currentSavingsDetail.SavingDetailAdapter
 import id.celenganku.app.utils.formatNumber

@@ -1,7 +1,6 @@
 package id.celenganku.app.utils
 
 import android.content.Context
-import android.net.Uri
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.WindowManager
@@ -20,7 +19,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*

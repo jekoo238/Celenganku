@@ -1,13 +1,11 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="330dp"
-    android:height="185dp"
-    android:viewportWidth="330"
-    android:viewportHeight="185">
-  <path
-      android:pathData="M0,0h330v185h-330z"
-      android:fillColor="#E6E6E6"/>
-  <path
-      android:pathData="M215,54.111V131.889C215,138 210,143 203.889,143H126.111C120,143 115,138 115,131.889V54.111C115,48 120,43 126.111,43H203.889C210,43 215,48 215,54.111ZM159.444,118.056L147.778,104C146.611,102.611 144.5,102.667 143.444,104.111L129.611,121.889C128.166,123.722 129.444,126.389 131.778,126.389H198.389C200.666,126.389 202,123.778 200.611,121.944L181.111,95.944C180,94.444 177.778,94.444 176.666,95.889L159.444,118.056Z"
-      android:fillColor="#B8B8B8"
-      android:fillType="evenOdd"/>
-</vector>
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item>
+    <shape android:shape="rectangle">
+      <solid android:color="?attr/colorSurfaceVariant"/>
+    </shape>
+  </item>
+  <item
+      android:gravity="center"
+      android:drawable="@drawable/ic_outline_terrain_24"/>
+</layer-list>
