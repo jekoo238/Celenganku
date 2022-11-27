@@ -57,7 +57,7 @@ fun TextInputEditText.addAutoConverterToMoneyFormat(layout: TextInputLayout){
                 if (it.isNotEmpty()){
                     val result = it.toIntOrNull()
                     if (result != null){
-                        val format = NumberFormat.getInstance(Locale.getDefault()).format(result)
+                        val format = NumberFormat.getInstance(Locale("in")).format(result)
                         setText(format)
                         setSelection(format.length)
                     }else{
@@ -82,12 +82,12 @@ fun MaterialAlertDialogBuilder.showWithSoftInput(): AlertDialog {
 }
 
 fun formatNumber(number: Int): String{
-    val formatter = NumberFormat.getNumberInstance(Locale.getDefault()).format(number)
+    val formatter = NumberFormat.getNumberInstance(Locale("in")).format(number)
     return "Rp. $formatter"
 }
 
 fun formatNumberTok(number: Int): String{
-    return NumberFormat.getNumberInstance(Locale.getDefault()).format(number)
+    return NumberFormat.getNumberInstance(Locale("in")).format(number)
 }
 
 fun Fragment.showToast(message: String?){

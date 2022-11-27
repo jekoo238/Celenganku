@@ -173,8 +173,11 @@ class SavingDetailFragment : Fragment() {
             val nominalValue = formView.nominalEt.text.getNumber()
             val notes = formView.infoEt.text?.toString()
 
-            if (nominalValue < 0){
-                formView.nominalLayout.error = "Nominal tidak boleh kosong"
+            if (nominalValue < 1){
+                formView.nominalLayout.apply {
+                    error = "Nominal tidak boleh kosong"
+                    requestFocus()
+                }
                 return@setOnClickListener
             }
 
