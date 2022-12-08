@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:transitionGroup="true"
     android:fitsSystemWindows="true"
-    tools:context=".ui.savingsDoneDetail.HistoryDetailFragment">
+    tools:context=".ui.home.done.detail.HistoryDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"

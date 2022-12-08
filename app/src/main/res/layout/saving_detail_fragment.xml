@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:transitionGroup="true"
     android:fitsSystemWindows="true"
-    tools:context=".ui.currentSavingsDetail.SavingDetailFragment">
+    tools:context=".ui.home.current.detail.SavingDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -29,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingTop="8dp"
         android:paddingBottom="80dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

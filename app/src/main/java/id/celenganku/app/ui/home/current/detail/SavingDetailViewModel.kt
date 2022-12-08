@@ -1,4 +1,4 @@
-package id.celenganku.app.ui.currentSavingsDetail
+package id.celenganku.app.ui.home.current.detail
 
 import android.net.Uri
 import androidx.lifecycle.LiveData

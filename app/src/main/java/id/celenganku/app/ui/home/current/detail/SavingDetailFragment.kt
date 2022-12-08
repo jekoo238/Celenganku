@@ -1,4 +1,4 @@
-package id.celenganku.app.ui.currentSavingsDetail
+package id.celenganku.app.ui.home.current.detail
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

@@ -24,10 +24,14 @@
         android:id="@+id/addSavingFragment"
         android:name="id.celenganku.app.ui.form.SavingFormFragment"
         android:label="Tambah Celengan"
-        tools:layout="@layout/saving_form_fragment" />
+        tools:layout="@layout/saving_form_fragment" >
+        <action
+            android:id="@+id/action_addSavingFragment_to_imageCropFragment"
+            app:destination="@id/imageCropFragment" />
+    </fragment>
     <fragment
         android:id="@+id/savingDetailFragment"
-        android:name="id.celenganku.app.ui.currentSavingsDetail.SavingDetailFragment"
+        android:name="id.celenganku.app.ui.home.current.detail.SavingDetailFragment"
         android:label="{title}"
         tools:layout="@layout/saving_detail_fragment" >
         <argument
@@ -39,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/historyDetailFragment"
-        android:name="id.celenganku.app.ui.savingsDoneDetail.HistoryDetailFragment"
+        android:name="id.celenganku.app.ui.home.done.detail.HistoryDetailFragment"
         android:label="{title}"
         tools:layout="@layout/history_detail_fragment">
         <argument
@@ -48,5 +52,14 @@
         <argument
             android:name="title"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageCropFragment"
+        android:name="id.celenganku.app.ui.imagecrop.ImageCropFragment"
+        android:label="fragment_image_crop"
+        tools:layout="@layout/fragment_image_crop" >
+        <argument
+            android:name="uri"
+            app:argType="android.net.Uri" />
     </fragment>
 </navigation>

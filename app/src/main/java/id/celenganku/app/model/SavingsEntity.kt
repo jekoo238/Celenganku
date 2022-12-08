@@ -6,8 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "saving")
 data class SavingsEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int?,
     val title: String,
     val image: String?,
     val target: Int,
@@ -16,7 +14,9 @@ data class SavingsEntity(
     val dateCreated: Long,
     val dateFinished: Long?,
     @ColumnInfo(defaultValue = "0")
-    val fillingType: Long
+    val fillingType: Long,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int? = null
 ) {
     val  fillingTypeText get() = when(fillingType) {
         0L -> "Hari"

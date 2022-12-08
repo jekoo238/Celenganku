@@ -1,4 +1,4 @@
-package id.celenganku.app.ui.currentSavingsDetail
+package id.celenganku.app.ui.home.current.detail
 
 import android.graphics.Color
 import android.view.LayoutInflater

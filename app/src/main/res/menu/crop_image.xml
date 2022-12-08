@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/rotate"
+        android:icon="@drawable/ic_baseline_crop_rotate_24"
+        android:title="Putar"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/crop"
+        android:title="Simpan"
+        app:showAsAction="always" />
+</menu>

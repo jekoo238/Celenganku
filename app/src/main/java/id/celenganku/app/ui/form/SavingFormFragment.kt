@@ -1,29 +1,25 @@
 package id.celenganku.app.ui.form
 
-import android.Manifest
-import android.app.Activity
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment.DIRECTORY_PICTURES
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
+import androidx.core.view.doOnPreDraw
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.transition.MaterialSharedAxis
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.RequestCreator
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import id.celenganku.app.R
+import id.celenganku.app.base.BaseFragment
+import id.celenganku.app.databinding.DialogChoosePhotoBinding
 import id.celenganku.app.databinding.SavingFormFragmentBinding
 import id.celenganku.app.model.SavingsEntity
-import id.celenganku.app.utils.addAutoConverterToMoneyFormat
-import id.celenganku.app.utils.getNumber
+import id.celenganku.app.ui.imagecrop.ImageCropFragment
+import id.celenganku.app.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,28 +28,17 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.*
 
-class SavingFormFragment : Fragment() {
+class SavingFormFragment : BaseFragment<SavingFormFragmentBinding>(SavingFormFragmentBinding::inflate) {
 
     private val viewModel: SavingFormViewModel by viewModel()
-    private var _binding: SavingFormFragmentBinding? = null
-    private val binding: SavingFormFragmentBinding get() = _binding!!
-    private var requestCreator: RequestCreator? = null
+    private lateinit var requestPickImageFromGallery: ActivityResultLauncher<String>
+    private lateinit var requestPickImageFromCamera: ActivityResultLauncher<String>
 
-    override fun onCreate(savedInstanceState: Bundle?)  {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
-    }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = SavingFormFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun renderView(context: Context, savedInstanceState: Bundle?) {
+        savedInstanceState?.parcelable<Uri>("imageUri")?.let {
+            binding.savingImage.setImageURI(it)
+            viewModel.imageUri = it
+        }
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
 
@@ -64,16 +49,59 @@ class SavingFormFragment : Fragment() {
         binding.targetPerDay.addAutoConverterToMoneyFormat(binding.targetPerDayLayout)
 
         binding.savingImage.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                pickImageFromGallery()
-            }else{
-                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-            }
+            showImageChooserDialog()
         }
 
         binding.saveButton.setOnClickListener {
             saveSavings()
         }
+
+        setFragmentResultListener(ImageCropFragment.CROP_IMAGE_RESULT){ _, bundle ->
+            bundle.parcelable<Uri>(ImageCropFragment.CROPPED_BITMAP).let {
+                viewModel.imageUri = it
+                binding.savingImage.setImageURI(it)
+            }
+        }
+    }
+
+    private fun openImageCropFragment(uri: Uri?) {
+        uri ?: return
+        val direction = SavingFormFragmentDirections.actionAddSavingFragmentToImageCropFragment(uri)
+        findNavController().navigate(direction)
+    }
+
+    private fun showImageChooserDialog() {
+
+        val chooserBinding = DialogChoosePhotoBinding.inflate(layoutInflater)
+
+        val dialog = BottomSheetDialog(requireContext()).apply {
+            setContentView(chooserBinding.root)
+            behavior.maxWidth = 480.dotPixel()
+        }
+
+        chooserBinding.root.doOnPreDraw {
+            dialog.behavior.peekHeight = it.height
+        }
+
+        chooserBinding.camera.setOnClickListener {
+            dialog.dismiss()
+            try {
+                requestPickImageFromCamera.launch("image_captured.jpg")
+            } catch (e: Exception) {
+                showToast("Error: ${e.message}")
+            }
+        }
+
+        chooserBinding.gallery.setOnClickListener {
+            dialog.dismiss()
+            try {
+                requestPickImageFromGallery.launch("image/*")
+            } catch (e: Exception) {
+                showToast("Error: ${e.message}")
+            }
+        }
+
+        dialog.show()
     }
 
     private fun saveSavings() {
@@ -81,7 +109,7 @@ class SavingFormFragment : Fragment() {
         val target = binding.target.text.getNumber()
         val targetPerDay = binding.targetPerDay.text.getNumber()
 
-        if (title.isNullOrEmpty() or title.isNullOrEmpty()){
+        if (title.isNullOrEmpty()){
             binding.titleLayout.apply {
                 error = "Nama tabungan harus diisi"
                 requestFocus()
@@ -106,39 +134,48 @@ class SavingFormFragment : Fragment() {
 
         binding.savingProgressBar.visibility = View.VISIBLE
 
-        val imageName = Calendar.getInstance().timeInMillis.toString() +"_"+ Random().nextInt(100).toString() + ".webp"
-
         lifecycleScope.launch(Dispatchers.IO){
-            var uri: Uri? = null
+            try {
+                val imageUri = viewModel.imageUri?.let { convertCacheImageToExternalFileImage(it) }
+                val savingModel =  SavingsEntity(
+                    title.toString(),
+                    imageUri?.toString(),
+                    target.toString().toInt(),
+                    targetPerDay.toString().toInt(),
+                    0,
+                    Calendar.getInstance().timeInMillis,
+                    null,
+                    getCheckedIndex()
+                )
+                viewModel.addSaving(savingModel)
 
-            if (requestCreator != null){
-                val image = File(ContextCompat.getExternalFilesDirs(requireContext(), DIRECTORY_PICTURES).first().absolutePath, imageName)
-                val fos = FileOutputStream(image)
-                @Suppress("DEPRECATION")
-                requestCreator?.get()?.compress(Bitmap.CompressFormat.WEBP, 100, fos)
-                fos.close()
-                uri = Uri.fromFile(image)
+                withContext(Dispatchers.Main){
+                    findNavController().navigateUp()
+                }
+            } catch (e: Exception){
+                withContext(Dispatchers.Main){
+                    showToast("Error: ${e.message}")
+                }
             }
+        }
+    }
 
-            val savingModel =  SavingsEntity(
-                null,
-                title.toString(),
-                uri?.toString(),
-                target.toString().toInt(),
-                targetPerDay.toString().toInt(),
-                0,
-                Calendar.getInstance().timeInMillis,
-                null,
-                getCheckedIndex()
-            )
-            viewModel.addSaving(savingModel)
+    private fun convertCacheImageToExternalFileImage(cacheImageUri: Uri): Uri {
+        val fileName = "${Calendar.getInstance().timeInMillis}+${Random().nextInt(100)}.webp"
+        val parentPath = requireContext()
+            .getExternalFilesDirs(DIRECTORY_PICTURES)
+            .first()
+            .absolutePath
 
-            withContext(Dispatchers.Main){
-                findNavController().navigateUp()
+        val destinationFile = File(parentPath, fileName)
+
+        FileOutputStream(destinationFile).use { out ->
+            requireContext().contentResolver.openInputStream(cacheImageUri).use {
+                it?.copyTo(out)
             }
         }
 
-
+        return destinationFile.toUri()
     }
 
     private fun getCheckedIndex() = when(binding.fillingType.checkedButtonId) {
@@ -147,37 +184,19 @@ class SavingFormFragment : Fragment() {
         else -> 3L
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.first() == PackageManager.PERMISSION_GRANTED){
-            pickImageFromGallery()
+    override fun onCreate(savedInstanceState: Bundle?)  {
+        super.onCreate(savedInstanceState)
+        requestPickImageFromCamera = registerForActivityResult(TakePicture()) {
+            openImageCropFragment(it)
+        }
+
+        requestPickImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
+            openImageCropFragment(it)
         }
     }
 
-    private fun pickImageFromGallery(){
-        Intent(Intent.ACTION_PICK).apply {
-            type = "image/"
-        }.also {
-            startActivityForResult(it, 2)
-        }
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == 2){
-            val uri = data?.data
-            requestCreator = Picasso.get().load(uri)
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .centerCrop()
-                    .resize(binding.savingImage.width, binding.savingImage.height)
-
-            requestCreator?.into(binding.savingImage)
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("imageUri", viewModel.imageUri)
     }
 }

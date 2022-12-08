@@ -1,6 +1,12 @@
 package id.celenganku.app.utils
 
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
+import android.os.Build
+import android.os.Bundle
+import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.WindowManager
@@ -19,6 +25,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.OutputStream
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -103,3 +110,27 @@ fun Fragment.runInBackground(action: suspend CoroutineScope.()-> Unit) =
 
 suspend fun switchToMain(action: suspend CoroutineScope.()-> Unit) =
     withContext(Dispatchers.Main){ action() }
+
+fun Int.dotPixel() = (this.toFloat() * Resources.getSystem().displayMetrics.density).toInt()
+
+inline fun <reified T: Parcelable> Bundle.parcelable(key: String): T? {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return getParcelable(key, T::class.java)
+    }
+    return getParcelable(key)
+}
+
+fun webp(): CompressFormat {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        return CompressFormat.WEBP_LOSSLESS
+    }
+    return CompressFormat.WEBP
+}
+
+fun Bitmap.compressToWebP(stream: OutputStream) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        compress(Bitmap.CompressFormat.WEBP_LOSSY, 90, stream)
+        return
+    }
+    compress(Bitmap.CompressFormat.WEBP, 90, stream)
+}

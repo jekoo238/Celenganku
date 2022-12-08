@@ -1,4 +1,4 @@
-package id.celenganku.app.ui.savingsDoneDetail
+package id.celenganku.app.ui.home.done.detail
 
 import android.net.Uri
 import android.os.Bundle
@@ -12,7 +12,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import com.squareup.picasso.Picasso
 import id.celenganku.app.databinding.HistoryDetailFragmentBinding
-import id.celenganku.app.ui.currentSavingsDetail.SavingDetailAdapter
+import id.celenganku.app.ui.home.current.detail.SavingDetailAdapter
 import id.celenganku.app.utils.formatNumber
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
