@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment.DIRECTORY_PICTURES
-import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -138,7 +137,6 @@ class SavingFormFragment : BaseFragment<SavingFormFragmentBinding>(SavingFormFra
         lifecycleScope.launch(Dispatchers.IO){
             try {
                 val imageUri = viewModel.imageUri?.let { convertCacheImageToExternalFileImage(it) }
-                Log.d("coba", imageUri.toString())
                 val savingModel =  SavingsEntity(
                     title = title.toString(),
                     image = imageUri?.toString(),
