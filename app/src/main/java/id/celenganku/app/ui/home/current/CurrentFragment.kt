@@ -41,10 +41,6 @@ class CurrentFragment : Fragment() {
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_mainFeatureFragment_to_addSavingFragment)
         }
-
-        binding.recyclerView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-            if (scrollY > oldScrollY) binding.floatingActionButton.shrink() else binding.floatingActionButton.extend()
-        }
     }
 
     override fun onDestroyView() {

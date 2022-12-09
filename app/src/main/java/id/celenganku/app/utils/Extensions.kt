@@ -2,7 +2,6 @@ package id.celenganku.app.utils
 
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.os.Build
 import android.os.Bundle
@@ -25,7 +24,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.OutputStream
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -125,12 +123,4 @@ fun webp(): CompressFormat {
         return CompressFormat.WEBP_LOSSLESS
     }
     return CompressFormat.WEBP
-}
-
-fun Bitmap.compressToWebP(stream: OutputStream) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        compress(Bitmap.CompressFormat.WEBP_LOSSY, 90, stream)
-        return
-    }
-    compress(Bitmap.CompressFormat.WEBP, 90, stream)
 }
