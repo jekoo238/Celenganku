@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment.DIRECTORY_PICTURES
+import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -137,15 +138,16 @@ class SavingFormFragment : BaseFragment<SavingFormFragmentBinding>(SavingFormFra
         lifecycleScope.launch(Dispatchers.IO){
             try {
                 val imageUri = viewModel.imageUri?.let { convertCacheImageToExternalFileImage(it) }
+                Log.d("coba", imageUri.toString())
                 val savingModel =  SavingsEntity(
-                    title.toString(),
-                    imageUri?.toString(),
-                    target.toString().toInt(),
-                    targetPerDay.toString().toInt(),
-                    0,
-                    Calendar.getInstance().timeInMillis,
-                    null,
-                    getCheckedIndex()
+                    title = title.toString(),
+                    image = imageUri?.toString(),
+                    target = target.toString().toInt(),
+                    targetPerDay = targetPerDay.toString().toInt(),
+                    collected = 0,
+                    dateCreated = Calendar.getInstance().timeInMillis,
+                    dateFinished = null,
+                    fillingType = getCheckedIndex()
                 )
                 viewModel.addSaving(savingModel)
 

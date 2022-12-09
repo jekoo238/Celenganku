@@ -28,6 +28,17 @@
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
 
+        <item name="colorRose">#b91d1d</item>
+        <item name="colorOnRose">#ffffff</item>
+        <item name="colorRoseContainer">#ffdad6</item>
+        <item name="colorOnRoseContainer">#410002</item>
+        <item name="harmonizeRose">true</item>
+        <item name="colorLeaf">#286c2a</item>
+        <item name="colorOnLeaf">#ffffff</item>
+        <item name="colorLeafContainer">#abf5a3</item>
+        <item name="colorOnLeafContainer">#002203</item>
+        <item name="harmonizeLeaf">true</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>

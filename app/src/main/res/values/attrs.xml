@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorRose" format="color"/>
+    <attr name="colorOnRose" format="color"/>
+    <attr name="colorRoseContainer" format="color"/>
+    <attr name="colorOnRoseContainer" format="color"/>
+    <attr name="harmonizeRose" format="boolean"/>
+    <attr name="colorLeaf" format="color"/>
+    <attr name="colorOnLeaf" format="color"/>
+    <attr name="colorLeafContainer" format="color"/>
+    <attr name="colorOnLeafContainer" format="color"/>
+    <attr name="harmonizeLeaf" format="boolean"/>
+</resources>

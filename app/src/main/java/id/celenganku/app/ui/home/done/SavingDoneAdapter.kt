@@ -1,13 +1,12 @@
 package id.celenganku.app.ui.home.done
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import id.celenganku.app.databinding.ItemSavingDoneBinding
 import id.celenganku.app.model.SavingsEntity
 import id.celenganku.app.ui.home.HomeFragmentDirections
@@ -32,7 +31,7 @@ class SavingDoneAdapter: ListAdapter<SavingsEntity, SavingDoneAdapter.HistoryVie
             with(binding){
                 title.text = item.title
                 if (item.image != null){
-                    Picasso.get().load(Uri.parse(item.image)).into(image)
+                    image.setImageURI(item.image.toUri())
                 }
 
                 target.text = formatNumber(item.target)
@@ -40,7 +39,7 @@ class SavingDoneAdapter: ListAdapter<SavingsEntity, SavingDoneAdapter.HistoryVie
                     val day = TimeUnit.MILLISECONDS.toDays(finished-item.dateCreated)
                     completeDay.text = "Tercapai Dalam Waktu $day Hari"
                 }
-                root.setOnClickListener {
+                card.setOnClickListener {
                     val direction = HomeFragmentDirections.actionMainFeatureFragmentToHistoryDetailFragment(item.id!!, item.title)
                     it.findNavController().navigate(direction)
                 }

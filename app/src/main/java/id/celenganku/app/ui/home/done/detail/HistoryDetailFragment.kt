@@ -1,18 +1,18 @@
 package id.celenganku.app.ui.home.done.detail
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
-import com.squareup.picasso.Picasso
 import id.celenganku.app.databinding.HistoryDetailFragmentBinding
 import id.celenganku.app.ui.home.current.detail.SavingDetailAdapter
+import id.celenganku.app.utils.format
 import id.celenganku.app.utils.formatNumber
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
@@ -48,7 +48,10 @@ class HistoryDetailFragment : Fragment() {
         viewModel.savingId = args.savingId
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
 
-        binding.listSavingLogsRv.adapter = savingAdapter
+        binding.listSavingLogsRv.apply {
+            isNestedScrollingEnabled = false
+            adapter = savingAdapter
+        }
 
         viewModel.savingsLogs.observe(viewLifecycleOwner){
             savingAdapter.submitList(it)
@@ -61,12 +64,14 @@ class HistoryDetailFragment : Fragment() {
                     toolbar.title = saving.title
 
                     if (saving.image != null){
-                        Picasso.get().load(Uri.parse(saving.image)).into(savingImage)
+                        savingImage.setImageURI(saving.image.toUri())
                     }
                     target.text = formatNumber(saving.target)
+                    created2.text = saving.dateCreated.format("dd MMM yyyy")
+                    complete.text = saving.dateFinished?.format("dd MMM yyyy")
                     saving.dateFinished?.let { finished ->
                         val day = TimeUnit.MILLISECONDS.toDays(finished-saving.dateCreated)
-                        completeDay.text = "Tercapai Dalam Waktu $day Hari"
+                        binding.completeCount.text = "Tercapai Dalam Waktu $day Hari"
                     }
 
                     binding.deleteButton.setOnClickListener {
@@ -74,13 +79,9 @@ class HistoryDetailFragment : Fragment() {
                             setTitle("Hapus tabungan?")
                             setPositiveButton("Hapus"){ dialog, _ ->
                                 viewModel.deleteSavingById(args.savingId, saving.image)
-
-                                dialog.dismiss()
                                 findNavController().navigateUp()
                             }
-                            setNegativeButton("Batal"){ dialog, _ ->
-                                dialog.dismiss()
-                            }
+                            setNegativeButton("Batal", null)
                             create()
                             show()
                         }

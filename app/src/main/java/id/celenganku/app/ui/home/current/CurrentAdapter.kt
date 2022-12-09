@@ -1,13 +1,12 @@
 package id.celenganku.app.ui.home.current
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import id.celenganku.app.databinding.ItemSavingBinding
 import id.celenganku.app.model.SavingsEntity
 import id.celenganku.app.ui.home.HomeFragmentDirections
@@ -32,7 +31,7 @@ class CurrentAdapter: ListAdapter<SavingsEntity, CurrentAdapter.CurrentViewHolde
             with(binding){
                 title.text = item.title
                 if (item.image != null){
-                    Picasso.get().load(Uri.parse(item.image)).into(savingImage)
+                    savingImage.setImageURI(item.image.toUri())
                 }
 
                 target.text = formatNumber(item.target)
@@ -55,7 +54,7 @@ class CurrentAdapter: ListAdapter<SavingsEntity, CurrentAdapter.CurrentViewHolde
 
                 estimation.text = "Estimasi : $estimationDay ${item.fillingTypeText} Lagi"
 
-                root.setOnClickListener {
+                card.setOnClickListener {
                     val direction = HomeFragmentDirections.actionMainFeatureFragmentToSavingDetailFragment(item.id!!, item.title)
                     it.findNavController().navigate(direction)
                 }

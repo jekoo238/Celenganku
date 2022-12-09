@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import id.celenganku.app.R
 import id.celenganku.app.databinding.CurrentFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,11 +17,8 @@ class CurrentFragment : Fragment() {
     private val viewModel: CurrentViewModel by viewModel()
     private var _binding: CurrentFragmentBinding? = null
     private val binding: CurrentFragmentBinding get() = _binding!!
-    private lateinit var adapter: CurrentAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        adapter = CurrentAdapter()
+    private val adapter: CurrentAdapter by lazy {
+        CurrentAdapter().apply { stateRestorationPolicy = PREVENT_WHEN_EMPTY }
     }
 
     override fun onCreateView(
@@ -48,8 +46,6 @@ class CurrentFragment : Fragment() {
             if (scrollY > oldScrollY) binding.floatingActionButton.shrink() else binding.floatingActionButton.extend()
         }
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

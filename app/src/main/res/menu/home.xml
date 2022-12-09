@@ -3,8 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/changeTheme"
+        android:id="@+id/change_theme"
         android:icon="@drawable/ic_round_brightness_6_24"
         android:title="Tema"
         app:showAsAction="never|ifRoom" />
+    <item
+        android:id="@+id/give_feedback"
+        android:title="Beri Nilai Aplikasi"
+        app:showAsAction="never" />
 </menu>

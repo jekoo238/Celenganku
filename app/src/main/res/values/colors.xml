@@ -60,6 +60,8 @@
     <color name="md_theme_dark_surfaceTint">#77D1FF</color>
     <color name="md_theme_dark_surfaceTintColor">#77D1FF</color>
 
+    <color name="rose">#B71C1C</color>
+    <color name="leaf">#1B5E20</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey_image_placeholder">#E6E6E6</color>

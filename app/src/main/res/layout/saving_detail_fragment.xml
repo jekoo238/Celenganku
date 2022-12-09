@@ -25,10 +25,11 @@
 
     <ScrollView
         android:id="@+id/detailContent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:clipToPadding="false"
+        android:paddingTop="16dp"
         android:paddingBottom="80dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,16 +52,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/savingImage"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ic_image_bg"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintDimensionRatio="16:9"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/target"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginEnd="16dp"
-                        android:gravity="center_horizontal"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                        app:layout_constraintEnd_toStartOf="@+id/divider2"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                        app:layout_constraintEnd_toStartOf="@+id/targetProgressBar"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/savingImage"
                         tools:text="Rp. 16.000.000" />
@@ -69,12 +80,9 @@
                         android:id="@+id/targetPerDay"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp"
-                        android:gravity="center_horizontal"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                        app:layout_constraintEnd_toStartOf="@+id/divider2"
+                        android:layout_marginStart="24dp"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        app:layout_constraintEnd_toStartOf="@+id/targetProgressBar"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/target"
                         tools:text="Rp. 50.000 / Hari" />
@@ -88,7 +96,7 @@
                         android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
                         app:layout_constraintEnd_toStartOf="@+id/divider5"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/estimation" />
+                        app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
                     <TextView
                         android:id="@+id/collected"
@@ -98,7 +106,7 @@
                         android:layout_marginBottom="16dp"
                         android:gravity="end"
                         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textColor="#4caf50"
+                        android:textColor="?colorLeaf"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/divider5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -114,7 +122,7 @@
                         android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/divider5"
-                        app:layout_constraintTop_toBottomOf="@+id/estimation" />
+                        app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
                     <TextView
                         android:id="@+id/mins"
@@ -124,7 +132,7 @@
                         android:layout_marginBottom="16dp"
                         android:gravity="end"
                         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textColor="#d32f2f"
+                        android:textColor="?colorRose"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/divider5"
@@ -132,15 +140,46 @@
                         tools:text="Rp.12.000" />
 
                     <TextView
-                        android:id="@+id/percentage"
+                        android:id="@+id/textView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
-                        app:layout_constraintBottom_toBottomOf="@+id/targetProgressBar"
-                        app:layout_constraintEnd_toEndOf="@+id/targetProgressBar"
-                        app:layout_constraintStart_toStartOf="@+id/targetProgressBar"
-                        app:layout_constraintTop_toTopOf="@+id/targetProgressBar"
-                        tools:text="100%" />
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Waktu Dibuat"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/divider7" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Estimasi Tercapai"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+                    <TextView
+                        android:id="@+id/estimation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView8"
+                        tools:text="12 Bulan" />
+
+                    <TextView
+                        android:id="@+id/created"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView5"
+                        tools:text="24 Juni 2022" />
 
                     <View
                         android:id="@+id/divider5"
@@ -153,57 +192,54 @@
                         app:layout_constraintTop_toTopOf="@+id/textView7" />
 
                     <View
-                        android:id="@+id/divider2"
-                        android:layout_width="1dp"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="?android:attr/listDivider"
-                        app:layout_constraintBottom_toBottomOf="@+id/targetPerDay"
-                        app:layout_constraintEnd_toStartOf="@+id/targetProgressBar"
-                        app:layout_constraintTop_toTopOf="@+id/target" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/estimation"
+                        android:id="@+id/divider4"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="24dp"
                         android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:text="Estimasi 3 hari lagi"
-                        android:textAlignment="center"
-                        app:ensureMinTouchTargetSize="false"
+                        android:layout_marginEnd="24dp"
+                        android:background="?android:attr/listDivider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/targetProgressBar" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/savingImage"
+                    <View
+                        android:id="@+id/divider7"
                         android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:adjustViewBounds="true"
-                        android:background="@drawable/ic_image_bg"
-                        android:scaleType="centerCrop"
-                        app:layout_constraintDimensionRatio="16:9"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp"
+                        android:background="?android:attr/listDivider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:shapeAppearanceOverlay="@style/circleImageView" />
+                        app:layout_constraintTop_toBottomOf="@+id/targetPerDay" />
 
                     <com.google.android.material.progressindicator.CircularProgressIndicator
                         android:id="@+id/targetProgressBar"
                         style="@style/Widget.Material3.CircularProgressIndicator.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        app:indicatorSize="50dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/divider2"
+                        android:layout_marginEnd="24dp"
+                        app:indicatorSize="48dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/targetPerDay"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/divider2"
+                        app:layout_constraintTop_toTopOf="@+id/target"
                         app:showDelay="20000"
                         app:trackColor="?attr/colorSurfaceVariant"
                         app:trackCornerRadius="3dp" />
+
+                    <TextView
+                        android:id="@+id/percentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+                        app:layout_constraintBottom_toBottomOf="@+id/targetProgressBar"
+                        app:layout_constraintEnd_toEndOf="@+id/targetProgressBar"
+                        app:layout_constraintStart_toStartOf="@+id/targetProgressBar"
+                        app:layout_constraintTop_toTopOf="@+id/targetProgressBar"
+                        tools:text="100%" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -254,7 +290,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="28dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="208dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:elevation="6dp"
@@ -264,18 +300,18 @@
 
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.Material3.CardView.Elevated"
-            app:cardCornerRadius="6dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
+            app:cardCornerRadius="6dp"
             app:contentPadding="4dp">
 
             <TextView
-                android:layout_marginHorizontal="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
                 android:text="Menabung"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
         </com.google.android.material.card.MaterialCardView>
@@ -297,7 +333,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="28dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="152dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:elevation="6dp"
@@ -307,18 +343,18 @@
 
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.Material3.CardView.Elevated"
-            app:cardCornerRadius="6dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
+            app:cardCornerRadius="6dp"
             app:contentPadding="4dp">
 
             <TextView
-                android:layout_marginHorizontal="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
                 android:text="Ambil Tabungan"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
         </com.google.android.material.card.MaterialCardView>
@@ -340,7 +376,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="28dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="96dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:elevation="6dp"
@@ -350,18 +386,18 @@
 
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.Material3.CardView.Elevated"
-            app:cardCornerRadius="6dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
+            app:cardCornerRadius="6dp"
             app:contentPadding="4dp">
 
             <TextView
-                android:layout_marginHorizontal="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
                 android:text="Hapus Tabungan"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
         </com.google.android.material.card.MaterialCardView>

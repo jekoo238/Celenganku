@@ -1,12 +1,13 @@
 package id.celenganku.app.ui.home.current.detail
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.MaterialColors
+import id.celenganku.app.R
 import id.celenganku.app.databinding.ItemSavingDetailLogBinding
 import id.celenganku.app.model.SavingsLogEntity
 import id.celenganku.app.utils.format
@@ -14,17 +15,24 @@ import id.celenganku.app.utils.formatNumberTok
 
 class SavingDetailAdapter: ListAdapter<SavingsLogEntity, SavingDetailAdapter.SavingDetailViewHolder>(
         object : DiffUtil.ItemCallback<SavingsLogEntity>(){
-            override fun areItemsTheSame(oldItem: SavingsLogEntity, newItem: SavingsLogEntity): Boolean {
+            override fun areItemsTheSame(
+                oldItem: SavingsLogEntity,
+                newItem: SavingsLogEntity
+            ): Boolean {
                 return oldItem.logId == newItem.logId
             }
 
-            override fun areContentsTheSame(oldItem: SavingsLogEntity, newItem: SavingsLogEntity): Boolean {
+            override fun areContentsTheSame(
+                oldItem: SavingsLogEntity,
+                newItem: SavingsLogEntity
+            ): Boolean {
                 return oldItem == newItem
             }
         }
 ) {
 
-    inner class SavingDetailViewHolder(private val binding: ItemSavingDetailLogBinding): RecyclerView.ViewHolder(binding.root){
+    inner class SavingDetailViewHolder(private val binding: ItemSavingDetailLogBinding) :
+        RecyclerView.ViewHolder(binding.root){
 
         fun bind(item: SavingsLogEntity){
             with(binding){
@@ -32,12 +40,12 @@ class SavingDetailAdapter: ListAdapter<SavingsLogEntity, SavingDetailAdapter.Sav
                     note.text = item.notes
                     note.visibility = View.VISIBLE
                 }
-                date.text = item.timestamp.format("dd MMMM yyyy ● HH:mm")
+                date.text = item.timestamp.format("dd MMMM yyyy • HH:mm")
                 if (item.increase) {
-                    nominal.setTextColor(Color.parseColor("#4caf50"))
+                    nominal.setTextColor(MaterialColors.getColor(nominal, R.attr.colorLeaf))
                     nominal.text = "+ ${formatNumberTok(item.nominal)}"
                 } else {
-                    nominal.setTextColor(Color.parseColor("#d32f2f"))
+                    nominal.setTextColor(MaterialColors.getColor(nominal, R.attr.colorRose))
                     nominal.text = "- ${formatNumberTok(item.nominal)}"
                 }
             }
@@ -45,8 +53,12 @@ class SavingDetailAdapter: ListAdapter<SavingsLogEntity, SavingDetailAdapter.Sav
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavingDetailViewHolder {
-        val binding = ItemSavingDetailLogBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return SavingDetailViewHolder(binding)
+        return SavingDetailViewHolder(
+            ItemSavingDetailLogBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent, false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: SavingDetailViewHolder, position: Int) {

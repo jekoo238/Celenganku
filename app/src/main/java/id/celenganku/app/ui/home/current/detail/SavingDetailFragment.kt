@@ -1,21 +1,18 @@
 package id.celenganku.app.ui.home.current.detail
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.app.AlertDialog
-import android.net.Uri
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.transition.MaterialSharedAxis
-import com.squareup.picasso.Picasso
-import id.celenganku.app.R
+import com.google.android.material.transition.MaterialFade
+import id.celenganku.app.base.BaseFragment
 import id.celenganku.app.databinding.DialogSavingsFormBinding
 import id.celenganku.app.databinding.FragmentSavingDoneBinding
 import id.celenganku.app.databinding.SavingDetailFragmentBinding
@@ -27,32 +24,20 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.roundToInt
 
-class SavingDetailFragment : Fragment() {
+class SavingDetailFragment : BaseFragment<SavingDetailFragmentBinding>(
+    SavingDetailFragmentBinding::inflate
+) {
 
     private val viewModel: SavingDetailViewModel by viewModel()
-    private var _binding: SavingDetailFragmentBinding? = null
-    private val binding: SavingDetailFragmentBinding get() = _binding!!
-    private var isFabOpen: Boolean = false
     private val args: SavingDetailFragmentArgs by navArgs()
     private lateinit var savingAdapter: SavingDetailAdapter
 
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
         savingAdapter = SavingDetailAdapter()
     }
 
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View {
-        _binding = SavingDetailFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun renderView(context: Context, savedInstanceState: Bundle?) {
         viewModel.savingId = args.savingId
 
         binding.detailContent.setOnScrollChangeListener { _, _, scrollY, _, _ ->
@@ -85,7 +70,7 @@ class SavingDetailFragment : Fragment() {
             toolbar.title = saving.title
 
             if (saving.image != null){
-                Picasso.get().load(Uri.parse(saving.image)).into(savingImage)
+                savingImage.setImageURI(saving.image.toUri())
             }
             target.text = formatNumber(saving.target)
             collected.text = formatNumber(saving.collected)
@@ -106,7 +91,8 @@ class SavingDetailFragment : Fragment() {
             }
             targetPerDay.text = "${formatNumber(saving.targetPerDay)} $suffix"
             val estimationDay = ((saving.target-saving.collected)/saving.targetPerDay)
-            estimation.text = "Estimasi : $estimationDay ${saving.fillingTypeText} Lagi"
+            created.text = saving.dateCreated.format("dd MMM yyyy")
+            estimation.text = "$estimationDay ${saving.fillingTypeText}"
         }
 
         binding.addSavingsLayout.setOnClickListener{
@@ -139,14 +125,16 @@ class SavingDetailFragment : Fragment() {
         binding.fabClickedBg.setOnClickListener {
             viewModel.setShowOptionFab()
         }
-        viewModel.showOptionFab.observe(viewLifecycleOwner){ isShow ->
-            isFabOpen = isShow
-            if (isShow){
-                showOptionsFab()
-            }else{
-                hideOptionsFab()
-            }
+        viewModel.showOptionFab.observe(viewLifecycleOwner){ isFabOpen ->
+            binding.fabOptions.isSelected = isFabOpen
+            binding.fabClickedBg.isVisible = isFabOpen
+            TransitionManager.beginDelayedTransition(binding.root, MaterialFade())
+            binding.addSavingsLayout.isVisible = isFabOpen
+            binding.minSavingsLayout.isVisible = isFabOpen
+            binding.removeSavingsLayout.isVisible = isFabOpen
         }
+
+
     }
 
     private fun showSavingFormDialog(form: SavingFormModel){
@@ -225,45 +213,5 @@ class SavingDetailFragment : Fragment() {
             }
             .setNegativeButton("Batal"){ _, _ ->}
             .show()
-    }
-
-    private fun hideOptionsFab() {
-        with(binding){
-            fabOptions.isSelected = false
-            addSavingsLayout.animate().translationY(0f)
-            minSavingsLayout.animate().translationY(0f)
-            removeSavingsLayout.animate().translationY(0f).setListener(object : AnimatorListenerAdapter(){
-                override fun onAnimationEnd(animation: Animator) {
-                    super.onAnimationEnd(animation)
-                    if (!isFabOpen){
-                        addSavingsLayout.visibility = View.GONE
-                        minSavingsLayout.visibility = View.GONE
-                        removeSavingsLayout.visibility = View.GONE
-                    }
-                }
-            })
-            binding.fabClickedBg.visibility = View.GONE
-        }
-    }
-
-    private fun showOptionsFab() {
-        with(binding){
-            fabOptions.isSelected = true
-            binding.fabClickedBg.visibility = View.VISIBLE
-            addSavingsLayout.visibility = View.VISIBLE
-            minSavingsLayout.visibility = View.VISIBLE
-            removeSavingsLayout.visibility = View.VISIBLE
-            addSavingsLayout.animate().translationY(
-                resources.getDimension(R.dimen.value_350).unaryMinus())
-            minSavingsLayout.animate().translationY(
-                resources.getDimension(R.dimen.value_250).unaryMinus())
-            removeSavingsLayout.animate().translationY(
-                resources.getDimension(R.dimen.value_150).unaryMinus())
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
