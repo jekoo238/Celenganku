@@ -13,8 +13,8 @@ android {
         applicationId "id.celenganku.app"
         minSdkVersion 23
         targetSdkVersion 33
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -50,7 +50,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.fragment:fragment-ktx:1.5.4'
+    implementation 'androidx.fragment:fragment-ktx:1.5.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
@@ -70,7 +70,7 @@ dependencies {
     implementation 'org.koin:koin-androidx-viewmodel:2.1.6'
     implementation 'org.koin:koin-androidx-scope:2.1.6'
 
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.8.0-beta01'
 
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation "com.airbnb.android:lottie:4.2.2"

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.transition.FadeProvider
 import com.google.android.material.transition.MaterialSharedAxis
 
 abstract class BaseFragment<T : ViewBinding>(
@@ -41,9 +42,18 @@ abstract class BaseFragment<T : ViewBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z,false)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
+            duration = 600
+        }
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
+            secondaryAnimatorProvider = FadeProvider()
+            duration = 600
+        }
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z,false).apply {
+            duration = 600
+        }
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
+            duration = 600
+        }
     }
 }
