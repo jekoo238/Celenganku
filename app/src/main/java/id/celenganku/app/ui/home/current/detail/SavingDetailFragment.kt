@@ -92,7 +92,7 @@ class SavingDetailFragment : BaseFragment<SavingDetailFragmentBinding>(
             targetPerDay.text = "${formatNumber(saving.targetPerDay)} $suffix"
             val estimationDay = ((saving.target-saving.collected)/saving.targetPerDay)
             created.text = saving.dateCreated.format("dd MMM yyyy")
-            estimation.text = "$estimationDay ${saving.fillingTypeText}"
+            estimation.text = "$estimationDay ${saving.fillingTypeText} Lagi"
         }
 
         binding.addSavingsLayout.setOnClickListener{

@@ -38,16 +38,11 @@
         <item name="colorLeafContainer">#abf5a3</item>
         <item name="colorOnLeafContainer">#002203</item>
         <item name="harmonizeLeaf">true</item>
-
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
-    </style>
-
-    <style name="SplashTheme" parent="Theme.Celenganku">
-        <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 </resources>

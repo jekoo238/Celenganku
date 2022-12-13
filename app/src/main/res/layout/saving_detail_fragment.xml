@@ -23,7 +23,7 @@
             app:navigationIcon="@drawable/ic_round_arrow_back_ios_24" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/detailContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -81,7 +81,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                         app:layout_constraintEnd_toStartOf="@+id/targetProgressBar"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/target"
@@ -145,8 +146,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="16dp"
-                        android:text="Waktu Dibuat"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:text="Dibuat"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider7" />
 
@@ -156,8 +157,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="8dp"
-                        android:text="Estimasi Tercapai"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:text="Tercapai"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -166,7 +167,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="24dp"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView8"
                         tools:text="12 Bulan" />
@@ -176,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="24dp"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView5"
                         tools:text="24 Juni 2022" />
@@ -259,7 +260,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/listSavingLogsRv"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:clipToPadding="false"
                     android:nestedScrollingEnabled="false"
                     android:paddingStart="16dp"
@@ -271,7 +272,7 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <View
         android:fitsSystemWindows="true"

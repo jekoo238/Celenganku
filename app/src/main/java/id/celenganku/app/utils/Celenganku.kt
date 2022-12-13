@@ -20,6 +20,7 @@ class Celenganku: Application() {
     override fun onCreate() {
         super.onCreate()
         DynamicColors.applyToActivitiesIfAvailable(this)
+
         val mainModule = module {
             single {
                 Room.databaseBuilder(androidContext(), AppDB::class.java, "app.db")
