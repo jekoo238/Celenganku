@@ -4,7 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.net.toUri
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
@@ -13,17 +16,14 @@ import id.celenganku.app.base.BaseFragment
 import id.celenganku.app.databinding.MainFeatureFragmentBinding
 import id.celenganku.app.ui.home.current.CurrentFragment
 import id.celenganku.app.ui.home.done.SavingDoneFragment
-import id.celenganku.app.utils.PreferenceHelper
-import id.celenganku.app.utils.changeTheme
-import id.celenganku.app.utils.showToast
+import id.celenganku.app.utils.*
+import org.koin.android.ext.android.inject
 
 class HomeFragment : BaseFragment<MainFeatureFragmentBinding>(MainFeatureFragmentBinding::inflate) {
 
-    private lateinit var preference: PreferenceHelper
+    private val dataStore: DataStore<Preferences> by inject()
 
     override fun renderView(context: Context, savedInstanceState: Bundle?) {
-        preference = PreferenceHelper(context)
-
         binding.toolbar.apply {
             inflateMenu(R.menu.home)
             setOnMenuItemClickListener {
@@ -55,14 +55,19 @@ class HomeFragment : BaseFragment<MainFeatureFragmentBinding>(MainFeatureFragmen
     }
 
     private fun showThemeOptionDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Pilih Tema")
-            .setSingleChoiceItems(arrayOf("Default", "Terang", "Gelap"), preference.theme){dialog, which ->
-                preference.theme = which
-                changeTheme(preference)
-                dialog.dismiss()
-            }
-            .show()
+        dataStore.getData(lifecycleScope) { pref ->
+            val theme = pref.currentTheme()
+
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Pilih Tema")
+                .setSingleChoiceItems(arrayOf("Default", "Terang", "Gelap"), theme){dialog, which ->
+                    dialog.dismiss()
+                    dataStore.editData(lifecycleScope) { mutablePref ->
+                        mutablePref.setCurrentTheme(which)
+                    }
+                }
+                .show()
+        }
     }
 
     inner class ViewPagerAdapter  : FragmentStateAdapter(

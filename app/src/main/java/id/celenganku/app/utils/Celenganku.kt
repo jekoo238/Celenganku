@@ -1,6 +1,8 @@
 package id.celenganku.app.utils
 
 import android.app.Application
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.google.android.material.color.DynamicColors
 import id.celenganku.app.db.AppDB
@@ -28,7 +30,11 @@ class Celenganku: Application() {
                     .fallbackToDestructiveMigration()
                     .build()
             }
-
+            single {
+                PreferenceDataStoreFactory.create {
+                    androidContext().preferencesDataStoreFile("settings")
+                }
+            }
             single { get<AppDB>().savingDao() }
             viewModel { SavingFormViewModel(get()) }
             viewModel { CurrentViewModel(get()) }

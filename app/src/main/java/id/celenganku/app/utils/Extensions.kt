@@ -15,7 +15,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
@@ -32,13 +31,14 @@ fun Long.format(pattern: String): String {
     return SimpleDateFormat(pattern, Locale.getDefault()).format(Date(this))
 }
 
-fun changeTheme(preference: PreferenceHelper) {
-    val mode = when(preference.theme){
-        1 -> AppCompatDelegate.MODE_NIGHT_NO
-        2 -> AppCompatDelegate.MODE_NIGHT_YES
-        else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-    }
-    AppCompatDelegate.setDefaultNightMode(mode)
+fun changeTheme(mode: Int) {
+    AppCompatDelegate.setDefaultNightMode(
+        when(mode){
+            1 -> AppCompatDelegate.MODE_NIGHT_NO
+            2 -> AppCompatDelegate.MODE_NIGHT_YES
+            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
+    )
 }
 
 fun Editable?.getNumber(): Int = this?.filter { it.isDigit() }?.toString()?.toIntOrNull() ?: 0
@@ -103,18 +103,16 @@ fun Fragment.showToast(message: String?){
 fun ViewModel.runInBackground(action: suspend CoroutineScope.()-> Unit) =
     viewModelScope.launch(Dispatchers.IO){ action() }
 
-fun Fragment.runInBackground(action: suspend CoroutineScope.()-> Unit) =
-    lifecycleScope.launch(Dispatchers.IO){ action() }
-
 suspend fun switchToMain(action: suspend CoroutineScope.()-> Unit) =
     withContext(Dispatchers.Main){ action() }
 
 fun Int.dotPixel() = (this.toFloat() * Resources.getSystem().displayMetrics.density).toInt()
 
 inline fun <reified T: Parcelable> Bundle.parcelable(key: String): T? {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        return getParcelable(key, T::class.java)
-    }
+    //Not yet implement, it's has a bug
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//        return getParcelable(key, T::class.java)
+//    }
     return getParcelable(key)
 }
 
